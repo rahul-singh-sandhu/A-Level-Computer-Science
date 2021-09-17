@@ -1,3 +1,2 @@
-print("Hello World!")
-name = input("what is your name")
-print(name)
+import ftplib
+ip = input("Please enter the hostname/ip address of")
