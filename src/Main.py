@@ -12,4 +12,11 @@ if connectionChoice == "hostname":
     files = ftp.dir()
     print(files)
 elif connectionChoice == "IP":
-    ip = int(input("Please enter an IP address: \n"))
+    ip = input("Please enter an IP address: \n")
+    user = input("Please enter a username: \n")
+    passwd = input("Please enter a password: \n")
+    ftp = FTP(ip)
+    ftp.login(user=user, passwd=passwd)
+    print("File List: ")
+    files = ftp.dir()
+    print(files)
