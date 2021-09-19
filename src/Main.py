@@ -1,8 +1,6 @@
 import ftplib
-import tkinter
 from ftplib import FTP
-from tkinter import *
-from tkinter import ttk
+
 connectionChoice = input("Would you like to use a hostname or an IP address? \n")
 if connectionChoice == "hostname":
     hostname = input("Please enter an hostname: \n")
