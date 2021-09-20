@@ -66,3 +66,6 @@ Button(
     command=upload
     ).pack(anchor='w', padx=10)
 window.mainloop()
+
+
+#Good to see the comments in :)
