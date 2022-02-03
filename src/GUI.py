@@ -5,10 +5,6 @@ import ftplib
 from ftplib import FTP
 from tkinter import filedialog
 
-#This function creates the tkinter windows.
-import background
-import self as self
-
 window = Tk()
 window.wm_title("Networking Client")
 window.resizable(True,True)
