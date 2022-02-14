@@ -2,14 +2,14 @@
 from tkinter import *
 from ftplib import *
 from tkinter import filedialog
-
-print("Hello this is Rich")
+import tkinter as tk
 
 window = Tk()
 window.wm_title("Networking Client")
 window.resizable(True,True)
 window.configure(bg='white')
 window.geometry("1200x800")
+window.iconbitmap('src/logo.ico')
 
 #This function is the function that retrives the hostname, username and password that the user enters, and then returns the list of files on the ftp server.
 def storeIP():
