@@ -11,8 +11,6 @@ window.resizable(True,True)
 window.configure(bg='white')
 window.geometry("200x430")
 
-print("Hello World")
-
 #This function is the function that retrives the hostname, username and password that the user enters, and then returns the list of files on the ftp server.
 def storeIP():
     #The following variables contain the hostname, username and password.
