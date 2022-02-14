@@ -9,7 +9,7 @@ window = Tk()
 window.wm_title("Networking Client")
 window.resizable(True,True)
 window.configure(bg='white')
-window.geometry("200x430")
+window.geometry("1200x800")
 
 #This function is the function that retrives the hostname, username and password that the user enters, and then returns the list of files on the ftp server.
 def storeIP():
@@ -19,12 +19,15 @@ def storeIP():
     passwd_login = passwd.get()
     directory_path = directory.get()
     #This function loads the FTP server.
-    ftp = FTP(ip_host)
-    ftp.login(user=user_login, passwd=passwd_login)
-    #This function prints the directory structure.
-    print("File List: ")
-    files = ftp.dir()
-    print(files)
+    try:
+        ftp = FTP(ip_host)
+        ftp.login(user=user_login, passwd=passwd_login)
+        #This function prints the directory structure.
+        print("File List: ")
+        files = ftp.dir()
+        print(files)
+    except:
+        print("The ftp server could not be reached. Please check your server name, username and password.")
 def upload():
     filename = data.get()
     ip_host = ip_hostname.get()
@@ -41,9 +44,12 @@ def download():
     ip_host = ip_hostname.get()
     user_login = user.get()
     passwd_login = passwd.get()
-    ftp = ftplib.FTP(ip_host, user_login, passwd_login)
-    with open(filename, "wb") as file:
-        ftp.retrbinary(f"RETR {filename}", file.write)
+    try:
+        ftp = ftplib.FTP(ip_host, user_login, passwd_login)
+        with open(filename, "wb") as file:
+            ftp.retrbinary(f"RETR {filename}", file.write)
+    except:
+        print("The ftp server could not be reached. Please check your server name, username and password.")
 def browseFiles():
     filename = filedialog.askopenfilename(initialdir="/",
                                           title="Select a File",
