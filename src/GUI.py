@@ -1,9 +1,6 @@
 #importing the libraries
 from tkinter import *
-from tkinter import ttk
-import ftplib
-from ftplib import FTP
-from tkinter import filedialog
+from ftplib import *
 
 print("Hello this is Rich")
 
