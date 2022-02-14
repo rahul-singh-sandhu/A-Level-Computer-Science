@@ -1,6 +1,7 @@
 #importing the libraries
 from tkinter import *
 from ftplib import *
+from tkinter import filedialog
 
 print("Hello this is Rich")
 
@@ -20,7 +21,6 @@ def storeIP():
     #This function loads the FTP server.
     ftp = FTP(ip_host)
     ftp.login(user=user_login, passwd=passwd_login)
-    ftp.cwd(directory_path)
     #This function prints the directory structure.
     print("File List: ")
     files = ftp.dir()
