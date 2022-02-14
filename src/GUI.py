@@ -5,6 +5,8 @@ import ftplib
 from ftplib import FTP
 from tkinter import filedialog
 
+print("Hello this is Rich")
+
 window = Tk()
 window.wm_title("Networking Client")
 window.resizable(True,True)
