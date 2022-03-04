@@ -1,6 +1,8 @@
 import ftplib
 from ftplib import FTP
 
+print("Hello World!")
+
 while True:
     hostname = input("Please enter an hostname: \n")
     user = input("Please enter a username: \n")
