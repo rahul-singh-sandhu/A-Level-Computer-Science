@@ -3,6 +3,9 @@ from tkinter import *
 from ftplib import *
 from tkinter import filedialog
 import tkinter as tk
+import ftplib
+from tkinter import BOTH, END, LEFT
+import tkinter
 #Test
 window = Tk()
 window.wm_title("Networking Client")
@@ -10,22 +13,35 @@ window.resizable(True,True)
 window.configure(bg='white')
 window.geometry("1200x800")
 window.iconbitmap('src/logo.ico')
-
+text_servermsg = tkinter.Text(window)
+text_servermsg.place(x=300,y=150)
 #This function is the function that retrives the hostname, username and password that the user enters, and then returns the list of files on the ftp server.
 def storeIP():
     #The following variables contain the hostname, username and password.
     ip_host = ip_hostname.get()
     user_login = user.get()
     passwd_login = passwd.get()
-    directory_path = directory.get()
     #This function loads the FTP server.
     try:
         ftp = FTP(ip_host)
         ftp.login(user=user_login, passwd=passwd_login)
+        items = []
+        ftp.retrlines('LIST', items.append ) 
+        items = map( str.split, items )
+        directorys = [ item.pop() for item in items if item[0][0] == 'd' ]
+        print( "directrys", directorys )
+        print( 'foo' in directorys )
         #This function prints the directory structure.
-        print("File List: ")
-        files = ftp.dir()
-        print(files)
+        text_servermsg.insert(END,ftp.getwelcome())
+        text_servermsg.insert(END,"\n")
+        text_servermsg.insert(END,"Directory list")
+        text_servermsg.insert(END,"\n")
+        text_servermsg.insert(END,"-----------------------------------------")
+        text_servermsg.insert(END,"\n")
+        for directorys in directorys:
+            text_servermsg.insert(END, directorys + '\n')
+        for directorys in directorys:
+            text_servermsg.insert(END, items + '\n')
     except:
         print("The ftp server could not be reached. Please check your server name, username and password.")
 def upload():
@@ -50,6 +66,9 @@ def download():
             ftp.retrbinary(f"RETR {filename}", file.write)
     except:
         print("The ftp server could not be reached. Please check your server name, username and password.")
+def type():
+    pass
+          
 def browseFiles():
     filename = filedialog.askopenfilename(initialdir="/",
                                           title="Select a File",
@@ -70,6 +89,7 @@ user.insert(END, 'Username')
 passwd = Entry(window)
 passwd.pack(anchor='w',padx=10,pady=30)
 passwd.insert(END, 'Password')
+passwd.config(show="*");
 data = Entry(window)
 data.pack(anchor='w', padx=10, pady=30)
 data.insert(END, 'File Names')
