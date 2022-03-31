@@ -1,0 +1,9 @@
+import ftputil
+
+with ftputil.FTPHost("192.168.50.198", "rahulsandhu", "B1gg1e500@&") as ftp_host:
+    list = ftp_host.listdir(ftp_host.curdir)
+    for fname in list:
+        if ftp_host.path.isdir(fname):
+            print(fname + " is a directory")
+        else:
+            print(fname + " is not a directory")

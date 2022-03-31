@@ -3,7 +3,7 @@ from tkinter import *
 from ftplib import *
 from tkinter import filedialog
 import tkinter as tk
-import ftplib
+import ftputil
 from tkinter import BOTH, END, LEFT
 import tkinter
 #Test
@@ -22,51 +22,25 @@ def storeIP():
     user_login = user.get()
     passwd_login = passwd.get()
     #This function loads the FTP server.
-    try:
-        ftp = FTP(ip_host)
-        ftp.login(user=user_login, passwd=passwd_login)
-        items = []
-        ftp.retrlines('LIST', items.append ) 
-        items = map( str.split, items )
-        directorys = [ item.pop() for item in items if item[0][0] == 'd' ]
-        print( "directrys", directorys )
-        print( 'foo' in directorys )
-        #This function prints the directory structure.
-        text_servermsg.insert(END,ftp.getwelcome())
-        text_servermsg.insert(END,"\n")
-        text_servermsg.insert(END,"Directory list")
-        text_servermsg.insert(END,"\n")
-        text_servermsg.insert(END,"-----------------------------------------")
-        text_servermsg.insert(END,"\n")
-        for directorys in directorys:
-            text_servermsg.insert(END, directorys + '\n')
-        for directorys in directorys:
-            text_servermsg.insert(END, items + '\n')
-    except:
-        print("The ftp server could not be reached. Please check your server name, username and password.")
+    files = []
+    directories = []
+    with ftputil.FTPHost(ip_host, user_login, passwd_login) as ftp_host:
+        list = ftp_host.listdir(ftp_host.curdir)
+        for fname in list:
+            if ftp_host.path.isdir(fname):
+                directories.append(fname)
+                text_servermsg.insert(END, fname + " is a directory")
+                text_servermsg.insert(END, "\n")
+            else:
+                files.append(fname)
+                text_servermsg.insert(END, fname + " is not a directory")
+                text_servermsg.insert(END, "\n")
+    print(*files)
+    print(*directories)
+
 def upload():
-    filename = data.get()
-    ip_host = ip_hostname.get()
-    user_login = user.get()
-    passwd_login = passwd.get()
-    ftp = ftplib.FTP(ip_host, user_login, passwd_login)
-    with open(filename, "rb") as file:
-        ftp.storbinary(f"STOR {filename}", file)
-    print("File List: ")
-    files = ftp.dir()
-    print(files)
+    pass
 def download():
-    filename = data.get()
-    ip_host = ip_hostname.get()
-    user_login = user.get()
-    passwd_login = passwd.get()
-    try:
-        ftp = ftplib.FTP(ip_host, user_login, passwd_login)
-        with open(filename, "wb") as file:
-            ftp.retrbinary(f"RETR {filename}", file.write)
-    except:
-        print("The ftp server could not be reached. Please check your server name, username and password.")
-def type():
     pass
           
 def browseFiles():
@@ -89,7 +63,7 @@ user.insert(END, 'Username')
 passwd = Entry(window)
 passwd.pack(anchor='w',padx=10,pady=30)
 passwd.insert(END, 'Password')
-passwd.config(show="*");
+passwd.config(show="*")
 data = Entry(window)
 data.pack(anchor='w', padx=10, pady=30)
 data.insert(END, 'File Names')
